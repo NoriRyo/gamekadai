@@ -1,29 +1,43 @@
 #pragma once
-#include "SceneBase.h"
 
-class SceneMain : public SceneBase
+#include "player.h"
+#include "shot.h"
+#include "Vec2.h"
+
+class SceneMain
 {
 public:
-	SceneMain()
-	{
-		m_textPosX = 0;
-		m_textVecX = 0;
-		m_isEnd = false;
-	}
-	virtual ~SceneMain() {}
+	SceneMain();
+	virtual ~SceneMain();
 
+	// 初期化
+	void init();
+	// 終了処理
+	void end();
 
-	virtual void init();
-	virtual void end() {}
-
-	virtual void update();
-	virtual void draw();
-
-	virtual bool isEnd() { return m_isEnd; }
+	// 毎フレームの処理
+	void update();
+	// 毎フレームの描画
+	void draw();
+	
 private:
-	// テキスト表示位置変更
-	int m_textPosX;
-	int m_textVecX;
+	// ショットの最大数
+	static constexpr int kShotMax = 64;
 
-	bool m_isEnd;
+private:
+
+	// プレイヤーのグラフィックハンドル
+	int m_hPlayerGraphic;
+	int m_hShotGraphic;
+	// プレイヤー
+	Player m_player;
+	// ショット
+	Shot m_shot[kShotMax];
+	// ショットの発射間隔
+	int m_shotInterval;
+
+	// 表示位置
+	Vec2 m_pos;
+	// 移動
+	Vec2 m_vec;
 };

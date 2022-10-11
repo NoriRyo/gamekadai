@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include <cassert>
+#include "Pad.h"
 
 SceneManager::SceneManager()
 {
@@ -47,6 +48,9 @@ void SceneManager::end()
 
 void SceneManager::update()
 {
+
+	Pad::update();
+
 	bool isEnd = false;
 	switch (m_kind)
 	{
@@ -56,7 +60,7 @@ void SceneManager::update()
 		break;
 	case SceneManager::kSceneKindMain:
 		m_main.update();
-		isEnd = m_main.isEnd();
+		//isEnd = m_main.isEnd();
 		break;
 	case SceneManager::kSceneKindNum:
 	default:

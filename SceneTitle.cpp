@@ -1,5 +1,7 @@
 #include "SceneTitle.h"
 #include "DxLib.h"
+#include "Pad.h"
+#include "SelectMenu.h"
 
 void SceneTitle::init()
 {
@@ -42,8 +44,7 @@ void SceneTitle::update()
 
 	m_menu.update();
 
-	int padState = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-	if (padState & PAD_INPUT_1)
+	if (Pad::isTrigger(PAD_INPUT_1))
 	{
 		m_isEnd = true;
 	}

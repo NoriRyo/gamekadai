@@ -32,6 +32,8 @@ public:
 	int getWindowWidth();
 	int getWindowHeight();
 
+	
+
 private:
 	class Item
 	{
@@ -68,6 +70,12 @@ private:
 		void setMenuPos(Vec2 pos) { m_numePos = pos; }
 		void setSize(Vec2 size) { m_size = size; }
 		void setItemNum(int num) { m_itemNum = num; }
+		
+		
+		
+		// 選択している項目の番号
+		int m_selectIndox;
+
 	private:
 		//	メニューの表示位置
 		Vec2 m_numePos;
@@ -77,9 +85,11 @@ private:
 
 		// メニューの項目数
 		int m_itemNum;
-		
-		// 選択している項目の番号
-		int m_selectIndox;
+
+		// リピート入力カウンタ
+		int m_repeatUp;
+		int m_repeatDown;
+
 	};
 
 private:

@@ -1,5 +1,6 @@
 #include "SelectMenu.h"
 #include "DxLib.h"
+#include "Pad.h"
 
 namespace
 {
@@ -44,6 +45,8 @@ int SelectMenu::Item::getTextWidth()
 SelectMenu::Corsor::Corsor()
 {
 	m_selectIndox = 0;
+	m_repeatUp = 0;
+	m_repeatDown = 0;
 }
 
 SelectMenu::Corsor::~Corsor()
@@ -53,23 +56,60 @@ SelectMenu::Corsor::~Corsor()
 
 void SelectMenu::Corsor::update()
 {
-	int padState = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-	if (padState & PAD_INPUT_UP)
+	if (Pad::isPress(PAD_INPUT_UP))
 	{
-		m_selectIndox--;
-		// 上下ループ
-		if (m_selectIndox < 0)
+		if (m_repeatUp <= 0)
 		{
-			m_selectIndox = m_itemNum - 1;
+			m_selectIndox--;
+			m_repeatUp = 8;
+			// 上下ループ
+			if (m_selectIndox < 0) 
+			{
+				if (Pad::isTrigger(PAD_INPUT_UP))
+				{
+					m_selectIndox = m_itemNum - 1;
+				}
+				else
+				{
+					m_selectIndox = 0;
+				}
+			}
+		}
+		else
+		{
+			m_repeatUp--;
 		}
 	}
-	if (padState & PAD_INPUT_DOWN)
+	else
 	{
-		m_selectIndox++;
-		if (m_selectIndox > m_itemNum - 1)
+		m_repeatUp = 0;
+	}
+	if (Pad::isPress(PAD_INPUT_DOWN))
+	{
+		if (m_repeatDown <= 0)
 		{
-			m_selectIndox = 0;
+			m_selectIndox++;
+			m_repeatDown = 8;
+			if (m_selectIndox > m_itemNum - 1) 
+			{
+				if (Pad::isTrigger(PAD_INPUT_DOWN))
+				{
+					m_selectIndox = 0;
+				}
+				else
+				{
+					m_selectIndox = m_itemNum - 1;
+				}
+			}
 		}
+		else
+		{
+			m_repeatDown--;
+		}
+	}
+	else
+	{
+		m_repeatDown = 0;
 	}
 }
 
