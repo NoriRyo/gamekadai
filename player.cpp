@@ -66,18 +66,12 @@ void Player::update()
 
 void Player::drawLeft()
 {
-
-		//DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
 	// âE
-		DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
-	
+	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
 }
 
 void Player::drawRight()
 {
 	// ç∂
 	DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
-
-	//DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
-
 }

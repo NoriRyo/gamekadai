@@ -13,11 +13,13 @@ void SceneTitle::init()
 	m_menu.init();
 
 	m_menu.addItem("ゲームスタート");
-	m_menu.addItem("オプション");
-	m_menu.addItem("ゲーム終了");
-	m_menu.addItem("デバッグ");
+	m_menu.addItem("ゲームスタート");
+	m_menu.addItem("ゲームスタート");
+	//m_menu.addItem("オプション");
+	//m_menu.addItem("ゲーム終了");
+	//m_menu.addItem("デバッグ");
 
-	m_menu.setPos(64,64);
+	m_menu.setPos(150,150);
 
 	m_menu.setupCursor();
 }

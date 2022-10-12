@@ -29,8 +29,10 @@ private:
 	// プレイヤーのグラフィックハンドル
 	int m_hPlayerGraphic;
 	int m_hShotGraphic;
+	int m_hEnemyGraphic;
 	// プレイヤー
 	Player m_player;
+	
 	// ショット
 	Shot m_shot[kShotMax];
 	// ショットの発射間隔

@@ -12,6 +12,8 @@ SceneMain::SceneMain()
 {
 	m_hPlayerGraphic = -1;
 	m_hShotGraphic = -1;
+	m_hEnemyGraphic = -1;
+
 	m_shotInterval = 0;
 }
 SceneMain::~SceneMain()
@@ -24,7 +26,15 @@ void SceneMain::init()
 {
 	m_hPlayerGraphic = LoadGraph("data/player.bmp");
 
-	m_hShotGraphic = LoadGraph("data/shot.bmp");
+	//m_hShotGraphic = LoadGraph("data/shot.bmp");
+
+	//m_hEnemyGraphic = LoadGraph("data/kidan1.png");
+
+	m_hShotGraphic = LoadGraph("data/kidan1.png");
+
+	//m_hEnemyGraphic = LoadGraph("data/shot.bmp");
+
+
 
 	m_player.setHandle(m_hPlayerGraphic);
 	m_player.init();
@@ -41,12 +51,14 @@ void SceneMain::end()
 {
 	DeleteGraph(m_hPlayerGraphic);
 	DeleteGraph(m_hShotGraphic);
+	DeleteGraph(m_hEnemyGraphic);
 }
 
 // 毎フレームの処理
 void SceneMain::update()
 {
 	m_player.update();
+	
 	for (auto& shot : m_shot)
 	{
 		shot.update();
@@ -103,11 +115,15 @@ void SceneMain::draw()
 		shot.draw();
 	}
 
+
+
+
 	// 現在存在している玉の数を表示
 	int shotNum = 0;
 	for (auto& shot : m_shot)
 	{
 		if (shot.isExist()) shotNum++;
 	}
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "弾の数：%d", shotNum);
+//  DrawFormatString(0, 0, GetColor(255, 255, 255), "弾の数：%d", shotNum);
+	DrawFormatString(0, 0, GetColor(255, 255, 255), "1ボタン（左発射）2ボタン（右発射）");
 }
