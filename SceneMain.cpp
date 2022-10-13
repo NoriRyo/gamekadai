@@ -2,6 +2,16 @@
 #include "SceneMain.h"
 #include "box.h"
 
+bool isCol(Player& player, Box& box)
+{
+	// いづれかの箱が死んでいる場合は衝突しない
+	if (player.getPos().x > box.getBottomRight().x) return false;
+	if (player.getPos().x + 64.0f < box.getPos().x) return false;
+	if (player.getPos().y > box.getBottomRight().y) return false;
+	if (player.getPos().y + 80.0f < box.getPos().y) return false;
+	
+	return true;
+}
 namespace
 {
 	// ショットの発射間隔
@@ -34,19 +44,18 @@ void SceneMain::init()
 
 	//m_hEnemyGraphic = LoadGraph("data/shot.bmp");
 
-
 	m_player.setHandle(m_hPlayerGraphic);
 	m_player.init();
 
 	// BOX
-	box1.setSpeedRight(2.0f);
-	box1.setPos(-60.0f, 0.0f);
+	//box1.setSpeedRight(2.0f);
+	box1.setPos(60.0f, 60.0f);
 	box1.setSize(60.0f, 600.0f);
 	box1.setColor(GetColor(0, 255, 255));
 	
 
-	box2.setSpeedLeft(5.0f);
-	box2.setPos(640.0f, 0.0f);
+	//box2.setSpeedLeft(5.0f);
+	box2.setPos(340.0f, 60.0f);
 	box2.setSize(60.0f, 600.0f);
 	box2.setColor(GetColor(0, 255, 255));
 
@@ -111,6 +120,16 @@ void SceneMain::update()
 			break;
 		}
 	}
+
+	if (isCol(m_player, m_box))
+	{
+		m_player.setDead(true);
+	}
+	// 当たり判定
+	//if (setDead())
+	//{
+	//	m_player.setDead(true);
+	//}
 }
 
 // 毎フレームの描画
@@ -142,5 +161,8 @@ void SceneMain::draw()
 		if (shot.isExist()) shotNum++;
 	}
 //  DrawFormatString(0, 0, GetColor(255, 255, 255), "弾の数：%d", shotNum);
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "1ボタン（左発射）2ボタン（右発射）");
+	DrawFormatString(0, 0, GetColor(255, 255, 255), 
+		"1ボタン（左発射）2ボタン（右発射）");
+	
+
 }

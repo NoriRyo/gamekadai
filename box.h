@@ -19,14 +19,7 @@ public:
 
 	// データの取得
 	Vec2 getPos() const { return m_pos; } // 左上座標
-
-	// サイズの取得
-	Vec2 getSize() const { return m_size; }
-
 	Vec2 getBottomRight() const { return m_pos + m_size; } //右上座標
-	
-
-
 	bool isDead() const { return m_isDead; }
 
 	// 更新処理

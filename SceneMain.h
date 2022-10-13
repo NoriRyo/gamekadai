@@ -33,7 +33,7 @@ private:
 	int m_hEnemyGraphic;
 	// プレイヤー
 	Player m_player;
-
+	Box m_box;
 	// ボックス
 	//Box m_box;
 	
