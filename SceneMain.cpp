@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "SceneMain.h"
+#include "box.h"
 
 namespace
 {
@@ -26,18 +27,22 @@ void SceneMain::init()
 {
 	m_hPlayerGraphic = LoadGraph("data/player.bmp");
 
-	//m_hShotGraphic = LoadGraph("data/shot.bmp");
-
-	//m_hEnemyGraphic = LoadGraph("data/kidan1.png");
 
 	m_hShotGraphic = LoadGraph("data/kidan1.png");
 
 	//m_hEnemyGraphic = LoadGraph("data/shot.bmp");
 
 
-
 	m_player.setHandle(m_hPlayerGraphic);
 	m_player.init();
+
+	m_box.setPos(-50.0f, 0.0f);
+	m_box.setSize(60.0f, 600.0f);
+	m_box.setColor(GetColor(255, 255, 255));
+	//m_box.setSpeed(4.0f);
+	//m_box.setFill(false);
+	//m_box.m_sinRate += 1.5f;
+
 
 	for (auto& shot : m_shot)
 	{
@@ -58,6 +63,8 @@ void SceneMain::end()
 void SceneMain::update()
 {
 	m_player.update();
+
+	m_box.upda();
 	
 	for (auto& shot : m_shot)
 	{
@@ -115,7 +122,7 @@ void SceneMain::draw()
 		shot.draw();
 	}
 
-
+	m_box.draw();
 
 
 	// åªç›ë∂ç›ÇµÇƒÇ¢ÇÈã ÇÃêîÇï\é¶
