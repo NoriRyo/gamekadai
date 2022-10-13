@@ -7,15 +7,15 @@ public:
 	Box();
 	virtual ~Box();
 
+	virtual void setSpeedLeft(float speedleft);
+	virtual void setSpeedRight(float speedraight);
 	virtual void setPos(float x, float y);
 	virtual void setPos(Vec2 pos);
 	virtual void setSize(float x, float y);
 	virtual void setColor(unsigned int color) { m_color = color; }
-	//virtual void setSpeed(float speed);
 
 
 	void dead() { m_isDead = true; }
-
 
 	// データの取得
 	Vec2 getPos() const { return m_pos; } // 左上座標
@@ -25,6 +25,7 @@ public:
 
 	Vec2 getBottomRight() const { return m_pos + m_size; } //右上座標
 	
+
 
 	bool isDead() const { return m_isDead; }
 
@@ -49,7 +50,8 @@ private:
 	// カラー
 	unsigned int m_color;
 
-	int m_kSpeed;
+	bool m_SpeedLeft;
+	bool m_SpeedRight;
 	// 塗りつぶし
 	bool m_isFill;
 	// 生死

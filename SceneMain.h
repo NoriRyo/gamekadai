@@ -35,7 +35,7 @@ private:
 	Player m_player;
 
 	// ボックス
-	Box m_box;
+	//Box m_box;
 	
 	// ショット
 	Shot m_shot[kShotMax];

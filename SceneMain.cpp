@@ -7,6 +7,8 @@ namespace
 	// ショットの発射間隔
 	constexpr int kShotInterval = 16;
 	int direction = 0;
+	Box box1;
+	Box box2;
 }
 
 SceneMain::SceneMain()
@@ -36,12 +38,17 @@ void SceneMain::init()
 	m_player.setHandle(m_hPlayerGraphic);
 	m_player.init();
 
-	m_box.setPos(-50.0f, 0.0f);
-	m_box.setSize(60.0f, 600.0f);
-	m_box.setColor(GetColor(255, 255, 255));
-	//m_box.setSpeed(4.0f);
-	//m_box.setFill(false);
-	//m_box.m_sinRate += 1.5f;
+	// BOX
+	box1.setSpeedRight(2.0f);
+	box1.setPos(-60.0f, 0.0f);
+	box1.setSize(60.0f, 600.0f);
+	box1.setColor(GetColor(0, 255, 255));
+	
+
+	box2.setSpeedLeft(5.0f);
+	box2.setPos(640.0f, 0.0f);
+	box2.setSize(60.0f, 600.0f);
+	box2.setColor(GetColor(0, 255, 255));
 
 
 	for (auto& shot : m_shot)
@@ -64,7 +71,9 @@ void SceneMain::update()
 {
 	m_player.update();
 
-	m_box.upda();
+	// BOX
+	box1.upda();
+	box2.upda();
 	
 	for (auto& shot : m_shot)
 	{
@@ -122,7 +131,8 @@ void SceneMain::draw()
 		shot.draw();
 	}
 
-	m_box.draw();
+	box1.draw();
+	box2.draw();
 
 
 	// 現在存在している玉の数を表示
