@@ -4,8 +4,8 @@
 namespace
 {
 	// 待ち時間
-	constexpr int kWaitFrameMin = 30;
-	constexpr int kWaitFrameMax = 30;
+	constexpr int kWaitFrameMin = 60;
+	constexpr int kWaitFrameMax = 60;
 	
 }
 
@@ -45,7 +45,7 @@ void Box::setPos(float x, float y)
 
 
 	// 動き始めるまでの時間を設定　1秒から3秒待つ　60フレームから180フレーム
-	m_waitFrame = 50;//GetRand(kWaitFrameMax - kWaitFrameMin) + kWaitFrameMin;
+	m_waitFrame = 120;//GetRand(kWaitFrameMax - kWaitFrameMin) + kWaitFrameMin;
 
 }
 
@@ -57,6 +57,7 @@ void Box::setPos(Vec2 pos)
 
 void Box::upda()
 {
+	if (m_isDead) return;
 	if (m_waitFrame > 0)
 	{
 		m_waitFrame--;

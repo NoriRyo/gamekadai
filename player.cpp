@@ -59,6 +59,7 @@ void Player::update()
 		// 加速
 		m_vec.y *= 0.9f;
 	}
+	/*
 	if (padState & PAD_INPUT_LEFT)
 	{
 		m_vec.x -= kAcc;
@@ -73,6 +74,7 @@ void Player::update()
 	{
 		m_vec.x *= 0.9f;
 	}
+	*/
 	m_pos += m_vec;
 }
 
@@ -100,30 +102,21 @@ bool Player::isCol(Box& box)
 {
 	float playerLeft = getPos().x;
 	float playerRight = getPos().x + kSizeX;
-	float playerTop = getPos().y;
-	float playerBottom = getPos().y + kSizeY;
-
+	
 	float boxLeft = box.getPos().x;
 	float boxRight = box.getPos().x + box.getSize().x;
-	float boxTop = box.getPos().y;
-	float boxBottom = box.getPos().y + box.getSize().y;
+	
 
-
-	DrawFormatString(0, 60, GetColor(255, 0, 255),
-		"P座標x:%g", playerLeft);
-	DrawFormatString(0, 80, GetColor(255, 0, 255),
-		"P座標y:%g", playerTop);
-
+	//DrawFormatString(0, 60, GetColor(255, 0, 255),
+	//	"P座標x:%g", playerLeft);
+	
 	//DrawFormatString(0, 100, GetColor(255, 0, 255),
 	//	"B座標x:%g", boxRight);
-	//DrawFormatString(0, 120, GetColor(255, 0, 255),
-	//	"B座標y:%g", boxBottom);
-
+	
 	
 	if (playerLeft > boxRight)	return false;
 	if (playerRight < boxLeft)	return false;
-	if (playerTop > boxBottom)	return false;
-	if (playerBottom < boxTop)	return false;	
+	
 
 	return true;
 }

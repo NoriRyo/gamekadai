@@ -23,7 +23,7 @@ public:
 	
 private:
 	// ƒVƒ‡ƒbƒg‚ÌÅ‘å”
-	static constexpr int kShotMax = 64;
+	static constexpr int kShotMax = 128;
 
 private:
 

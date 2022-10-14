@@ -49,13 +49,17 @@ void SceneMain::init()
 
 	// BOX
 	m_box1.setGraphic(m_hBoxGraphic);
-	m_box1.setSpeedRight(5.0f);
-	m_box1.setPos(-60.0f, 0.0f);
+	//m_box1.setSpeedRight(2.0f);
+	//m_box1.setPos(-70.0f, 0.0f);
 	
+	m_box1.setPos(70.0f, 0.0f);
+
+
 	m_box2.setGraphic(m_hBoxGraphic);
-	m_box2.setSpeedLeft(5.0f);
-	m_box2.setPos(640.0f, 0.0f);
+	//m_box2.setSpeedLeft(2.0f);
+	//m_box2.setPos(650.0f, 0.0f);
 	
+	m_box2.setPos(450.0f, 0.0f);
 
 	for (auto& shot : m_shot)
 	{
@@ -80,10 +84,18 @@ void SceneMain::update()
 	// BOX
 	m_box1.upda();
 	m_box2.upda();
-	
+
+
 	for (auto& shot : m_shot)
 	{
-		shot.update();
+		if (shot.isCol(m_box1) || shot.isCol(m_box2))
+		{
+			shot.isExist();
+		}
+		else
+		{
+			shot.update();
+		}
 	}
 	m_shotInterval--;
 	if (m_shotInterval < 0) m_shotInterval = 0;
@@ -92,7 +104,7 @@ void SceneMain::update()
 	int padState = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 	if ((padState & PAD_INPUT_2) && (m_shotInterval <= 0))
 	{
-		for (auto & shot : m_shot)
+		for (auto& shot : m_shot)
 		{
 			if (shot.isExist()) continue;
 
@@ -104,6 +116,7 @@ void SceneMain::update()
 			break;
 		}
 	}
+	
 	if ((padState & PAD_INPUT_1) && (m_shotInterval <= 0))
 	{
 		for (auto& shot : m_shot)
@@ -118,19 +131,19 @@ void SceneMain::update()
 		}
 	}
 	
+
+	// 当たり判定
 	if (m_player.isCol(m_box1))
 	{
+		m_box1.setDead(true);
 		m_player.setDead(true);
 	}
 	if (m_player.isCol(m_box2))
 	{
 		m_player.setDead(true);
+		m_box2.setDead(true);
 	}
-	// 当たり判定
-	//if (setDead())
-	//{
-	//	m_player.setDead(true);
-	//}
+	
 }
 
 // 毎フレームの描画
@@ -148,7 +161,14 @@ void SceneMain::draw()
 
 	for (auto& shot : m_shot)
 	{
-		shot.draw();
+		if (shot.isCol(m_box1) || shot.isCol(m_box2))
+		{
+			
+		}
+		else
+		{
+			shot.draw();
+		}
 	}
 
 	m_box1.draw();
@@ -161,9 +181,9 @@ void SceneMain::draw()
 	{
 		if (shot.isExist()) shotNum++;
 	}
-//  DrawFormatString(0, 0, GetColor(255, 255, 255), "弾の数：%d", shotNum);
+  DrawFormatString(0, 30, GetColor(255, 255, 255), "弾の数：%d", shotNum);
 	DrawFormatString(0, 0, GetColor(255, 255, 255), 
-		"1ボタン（左発射）2ボタン（右発射）");
+		"1ボタン（発射）");
 	
 
 }
