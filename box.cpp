@@ -76,6 +76,11 @@ void Box::upda()
 void Box::draw()
 {
 	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+
+}
+void Box::drawturn()
+{
+	DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
 	//DrawFormatString(100, 100, GetColor(255, 255, 255),
 	//	"wait;%d", m_waitFrame);
 }

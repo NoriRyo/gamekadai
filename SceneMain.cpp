@@ -15,7 +15,7 @@ bool isCol(Player& player, Box& box)
 namespace
 {
 	// ショットの発射間隔
-	constexpr int kShotInterval = 16;
+	constexpr int kShotInterval = 15;
 	int direction = 0;
 }
 
@@ -40,7 +40,7 @@ void SceneMain::init()
 
 	m_hShotGraphic = LoadGraph("data/kidan1.png");
 
-	m_hBoxGraphic  = LoadGraph("data/kabe.jpg");
+	m_hBoxGraphic  = LoadGraph("data/enemy.png");
 
 	//m_hEnemyGraphic = LoadGraph("data/shot.bmp");
 
@@ -49,17 +49,17 @@ void SceneMain::init()
 
 	// BOX
 	m_box1.setGraphic(m_hBoxGraphic);
-	//m_box1.setSpeedRight(2.0f);
-	//m_box1.setPos(-70.0f, 0.0f);
+	m_box1.setSpeedRight(10.0f);
+	m_box1.setPos(-451.0f, 0.0f);
 	
-	m_box1.setPos(70.0f, 0.0f);
+	//m_box1.setPos(50.0f, 0.0f);
 
 
 	m_box2.setGraphic(m_hBoxGraphic);
-	//m_box2.setSpeedLeft(2.0f);
-	//m_box2.setPos(650.0f, 0.0f);
+	m_box2.setSpeedLeft(10.0f);
+	m_box2.setPos(600.0f, 0.0f);
 	
-	m_box2.setPos(450.0f, 0.0f);
+	//m_box2.setPos(550.0f, 0.0f);
 
 	for (auto& shot : m_shot)
 	{
@@ -102,21 +102,29 @@ void SceneMain::update()
 
 	// キー入力処理
 	int padState = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-	if ((padState & PAD_INPUT_2) && (m_shotInterval <= 0))
+	if ((padState & PAD_INPUT_1) && (m_shotInterval <= 0))
 	{
 		for (auto& shot : m_shot)
 		{
 			if (shot.isExist()) continue;
 
-			shot.startLeft(m_player.getPos());
+			if (m_player.direction())
+			{
+				shot.startLeft(m_player.getPos());
+			}
+			else
+			{
+				shot.startRight(m_player.getPos());
+			}
+			
+			
 			m_shotInterval = kShotInterval;
-
-			direction = 1;
 
 			break;
 		}
 	}
-	
+
+	/*
 	if ((padState & PAD_INPUT_1) && (m_shotInterval <= 0))
 	{
 		for (auto& shot : m_shot)
@@ -130,6 +138,7 @@ void SceneMain::update()
 			break;
 		}
 	}
+	*/
 	
 
 	// 当たり判定
@@ -149,16 +158,8 @@ void SceneMain::update()
 // 毎フレームの描画
 void SceneMain::draw()
 {
-	if (direction == 1)
-	{
-		m_player.drawLeft();
-	}
-	else
-	{
-		m_player.drawRight();
-	}
+	m_player.draw();
 	
-
 	for (auto& shot : m_shot)
 	{
 		if (shot.isCol(m_box1) || shot.isCol(m_box2))
@@ -171,7 +172,7 @@ void SceneMain::draw()
 		}
 	}
 
-	m_box1.draw();
+	m_box1.drawturn();
 	m_box2.draw();
 
 

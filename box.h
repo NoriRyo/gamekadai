@@ -33,6 +33,8 @@ public:
 	// •`‰æ
 	void draw();
 
+	void drawturn();
+
 
 private:
 	int m_handle;

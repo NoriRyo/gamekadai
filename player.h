@@ -12,15 +12,17 @@ public:
 	// グラフィックデータ設定
 	void setHandle(int handle);
 
+	// プレイヤーの向き
+	bool direction() const { return m_direction; }
+
 	// プレイヤーの初期化
 	void init();
 
 	// 処理
 	void update();
+	
 	// 描画
-	void drawLeft();
-
-	void drawRight();
+	void draw();
 
 	// 衝突判定
 	bool isCol(Box& box);
@@ -39,6 +41,8 @@ public:
 private:
 	int m_handle;
 
+	bool m_direction;
+
 	// グラフィックの幅と高さ
 	Vec2 m_graphSize;
 	// 当たり判定の幅と高さ
@@ -50,4 +54,5 @@ private:
 	Vec2 m_vec;
 
 	bool m_isDead;
+
 };

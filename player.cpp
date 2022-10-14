@@ -9,13 +9,15 @@ namespace
 	constexpr float kSizeX = 64.0f;
 	constexpr float kSizeY = 80.0f;
 	// Xï˚å¸ÅAYï˚å¸ÇÃç≈ëÂë¨ìx
-	constexpr float kSpeedMax = 8.0f;
+	constexpr float kSpeedMax = 4.0f;
 	constexpr float kAcc = 0.4f;
 }
 
 Player::Player()
 {
 	m_handle = -1;
+
+	m_direction = false;
 
 	m_isDead = false;
 }
@@ -34,7 +36,7 @@ void Player::setHandle(int handle)
 void Player::init()
 {
 	m_pos.x = 280.0f;
-	m_pos.y = 200.0f;
+	m_pos.y = 320.0f;
 	m_vec.x = 0.0f;
 	m_vec.y = 0.0f;
 }
@@ -54,48 +56,40 @@ void Player::update()
 		m_vec.y += kAcc;
 		if (m_vec.y > kSpeedMax)	m_vec.y = kSpeedMax;
 	}
-	else
+	else if (padState & PAD_INPUT_LEFT)
 	{
-		// â¡ë¨
-		m_vec.y *= 0.9f;
-	}
-	/*
-	if (padState & PAD_INPUT_LEFT)
-	{
+		m_direction = false;
 		m_vec.x -= kAcc;
 		if (m_vec.x < -kSpeedMax)	m_vec.x = -kSpeedMax;
 	}
 	else if (padState & PAD_INPUT_RIGHT)
 	{
+		m_direction = true;
 		m_vec.x += kAcc;
 		if (m_vec.x > kSpeedMax)	m_vec.x = kSpeedMax;
 	}
+	
 	else
 	{
+		// â¡ë¨
 		m_vec.x *= 0.9f;
+		m_vec.y *= 0.9f;
 	}
-	*/
+	
 	m_pos += m_vec;
 }
 
-void Player::drawLeft()
-{
-	if (m_isDead)
-	{
-		DrawFormatString(120, 120, GetColor(255, 255, 0), "dead");
-	};
-	// âE
-	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
-}
 
-void Player::drawRight()
+void Player::draw()
 {
-	if (m_isDead)
+	if (m_direction == true)
 	{
-		DrawFormatString(120, 120, GetColor(255, 255, 0), "dead");
+		DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
 	}
-	// ç∂
-	DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
+	else
+	{
+		DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
+	}
 }
 
 bool Player::isCol(Box& box)
@@ -103,8 +97,8 @@ bool Player::isCol(Box& box)
 	float playerLeft = getPos().x;
 	float playerRight = getPos().x + kSizeX;
 	
-	float boxLeft = box.getPos().x;
-	float boxRight = box.getPos().x + box.getSize().x;
+	float boxLeft = box.getPos().x + 70.0f;
+	float boxRight = box.getPos().x + box.getSize().x - 70.0f;
 	
 
 	//DrawFormatString(0, 60, GetColor(255, 0, 255),
