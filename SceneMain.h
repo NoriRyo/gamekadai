@@ -31,9 +31,11 @@ private:
 	int m_hPlayerGraphic;
 	int m_hShotGraphic;
 	int m_hEnemyGraphic;
+	int m_hBoxGraphic;
 	// プレイヤー
 	Player m_player;
-	Box m_box;
+	Box m_box1;
+	Box m_box2;
 	// ボックス
 	//Box m_box;
 	

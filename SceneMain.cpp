@@ -1,24 +1,22 @@
 #include "DxLib.h"
 #include "SceneMain.h"
-#include "box.h"
 
+/*
 bool isCol(Player& player, Box& box)
 {
-	// いづれかの箱が死んでいる場合は衝突しない
-	if (player.getPos().x > box.getBottomRight().x) return false;
+	if (player.getPos().x > box.getPos().x) return false;
 	if (player.getPos().x + 64.0f < box.getPos().x) return false;
 	if (player.getPos().y > box.getBottomRight().y) return false;
 	if (player.getPos().y + 80.0f < box.getPos().y) return false;
 	
 	return true;
 }
+*/
 namespace
 {
 	// ショットの発射間隔
 	constexpr int kShotInterval = 16;
 	int direction = 0;
-	Box box1;
-	Box box2;
 }
 
 SceneMain::SceneMain()
@@ -26,6 +24,7 @@ SceneMain::SceneMain()
 	m_hPlayerGraphic = -1;
 	m_hShotGraphic = -1;
 	m_hEnemyGraphic = -1;
+	m_hBoxGraphic = -1;
 
 	m_shotInterval = 0;
 }
@@ -39,8 +38,9 @@ void SceneMain::init()
 {
 	m_hPlayerGraphic = LoadGraph("data/player.bmp");
 
-
 	m_hShotGraphic = LoadGraph("data/kidan1.png");
+
+	m_hBoxGraphic  = LoadGraph("data/kabe.jpg");
 
 	//m_hEnemyGraphic = LoadGraph("data/shot.bmp");
 
@@ -48,17 +48,14 @@ void SceneMain::init()
 	m_player.init();
 
 	// BOX
-	//box1.setSpeedRight(2.0f);
-	box1.setPos(60.0f, 60.0f);
-	box1.setSize(60.0f, 600.0f);
-	box1.setColor(GetColor(0, 255, 255));
+	m_box1.setGraphic(m_hBoxGraphic);
+	m_box1.setSpeedRight(5.0f);
+	m_box1.setPos(-60.0f, 0.0f);
 	
-
-	//box2.setSpeedLeft(5.0f);
-	box2.setPos(340.0f, 60.0f);
-	box2.setSize(60.0f, 600.0f);
-	box2.setColor(GetColor(0, 255, 255));
-
+	m_box2.setGraphic(m_hBoxGraphic);
+	m_box2.setSpeedLeft(5.0f);
+	m_box2.setPos(640.0f, 0.0f);
+	
 
 	for (auto& shot : m_shot)
 	{
@@ -81,8 +78,8 @@ void SceneMain::update()
 	m_player.update();
 
 	// BOX
-	box1.upda();
-	box2.upda();
+	m_box1.upda();
+	m_box2.upda();
 	
 	for (auto& shot : m_shot)
 	{
@@ -120,8 +117,12 @@ void SceneMain::update()
 			break;
 		}
 	}
-
-	if (isCol(m_player, m_box))
+	
+	if (m_player.isCol(m_box1))
+	{
+		m_player.setDead(true);
+	}
+	if (m_player.isCol(m_box2))
 	{
 		m_player.setDead(true);
 	}
@@ -150,8 +151,8 @@ void SceneMain::draw()
 		shot.draw();
 	}
 
-	box1.draw();
-	box2.draw();
+	m_box1.draw();
+	m_box2.draw();
 
 
 	// 現在存在している玉の数を表示

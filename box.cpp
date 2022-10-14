@@ -11,15 +11,21 @@ namespace
 
 Box::Box()
 {
+	m_handle = -1;
 	m_isDead = false;
 	m_waitFrame = 0;
-	//m_Speed = 0;
 }
 
 Box::~Box()
 {
 
 }
+void Box::setGraphic(int handle)
+{
+	m_handle = handle;
+	GetGraphSizeF(m_handle, &m_size.x, &m_size.y);
+}
+
 void Box::setSpeedLeft(float speedleft)
 {
 	m_SpeedLeft = speedleft;
@@ -48,11 +54,6 @@ void Box::setPos(Vec2 pos)
 	m_pos = pos;
 }
 
-void Box::setSize(float x, float y)
-{
-	m_size.x = x;
-	m_size.y = y;
-}
 
 void Box::upda()
 {
@@ -73,7 +74,7 @@ void Box::upda()
 }
 void Box::draw()
 {
-	DrawBox(m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, m_color, m_isFill);
-	DrawFormatString(50, 100, GetColor(255, 255, 255), "wait;%d", m_waitFrame);
-
+	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+	//DrawFormatString(100, 100, GetColor(255, 255, 255),
+	//	"wait;%d", m_waitFrame);
 }

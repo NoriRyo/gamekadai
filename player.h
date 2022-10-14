@@ -23,7 +23,7 @@ public:
 	void drawRight();
 
 	// Õ“Ë”»’è
-	//bool isCol(Box& box);
+	bool isCol(Box& box);
 
 	// î•ñ‚Ìæ“¾
 	Vec2 getPos() const { return m_pos; }

@@ -95,7 +95,7 @@ void Player::drawRight()
 	// 左
 	DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
 }
-/*
+
 bool Player::isCol(Box& box)
 {
 	float playerLeft = getPos().x;
@@ -103,16 +103,27 @@ bool Player::isCol(Box& box)
 	float playerTop = getPos().y;
 	float playerBottom = getPos().y + kSizeY;
 
-	float boxRight = box.getBottomRight().x;
 	float boxLeft = box.getPos().x;
-	float boxBottom = box.getBottomRight().y;
+	float boxRight = box.getPos().x + box.getSize().x;
 	float boxTop = box.getPos().y;
+	float boxBottom = box.getPos().y + box.getSize().y;
 
+
+	DrawFormatString(0, 60, GetColor(255, 0, 255),
+		"P座標x:%g", playerLeft);
+	DrawFormatString(0, 80, GetColor(255, 0, 255),
+		"P座標y:%g", playerTop);
+
+	//DrawFormatString(0, 100, GetColor(255, 0, 255),
+	//	"B座標x:%g", boxRight);
+	//DrawFormatString(0, 120, GetColor(255, 0, 255),
+	//	"B座標y:%g", boxBottom);
+
+	
 	if (playerLeft > boxRight)	return false;
 	if (playerRight < boxLeft)	return false;
 	if (playerTop > boxBottom)	return false;
-	if (playerBottom < boxTop)	return false;
+	if (playerBottom < boxTop)	return false;	
 
 	return true;
 }
-*/
