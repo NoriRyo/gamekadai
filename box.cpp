@@ -45,7 +45,7 @@ void Box::setPos(float x, float y)
 
 
 	// 動き始めるまでの時間を設定　1秒から3秒待つ　60フレームから180フレーム
-	m_waitFrame = 120;//GetRand(kWaitFrameMax - kWaitFrameMin) + kWaitFrameMin;
+	m_waitFrame = 180;//GetRand(kWaitFrameMax - kWaitFrameMin) + kWaitFrameMin;
 
 }
 
@@ -75,12 +75,18 @@ void Box::upda()
 }
 void Box::draw()
 {
-	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+	if (!m_isDead)
+	{
+		DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+	}
 
 }
 void Box::drawturn()
 {
-	DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
+	if (!m_isDead)
+	{
+		DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
+	}
 	//DrawFormatString(100, 100, GetColor(255, 255, 255),
 	//	"wait;%d", m_waitFrame);
 }

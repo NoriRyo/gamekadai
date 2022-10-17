@@ -148,6 +148,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="SelectMenu.cpp" />
+    <ClCompile Include="SceneStart.cpp" />
     <ClCompile Include="shot.cpp" />
     <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="SelectMenu.h" />
+    <ClInclude Include="SceneStart.h" />
     <ClInclude Include="shot.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>

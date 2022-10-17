@@ -82,26 +82,23 @@ bool Shot::isCol(Box& box)
 	float shotLeft = getPos().x;
 	float shotRight = getPos().x + kSizeX;
 
-	float boxLeft = box.getPos().x;
-	float boxRight = box.getPos().x + box.getSize().x;
+	float boxLeft = box.getPos().x + 70.0f;
+	float boxRight = box.getPos().x + box.getSize().x - 70.0f;
 
 	//DrawFormatString(0, 60, GetColor(255, 0, 255),
 	//	"PÀ•Wx:%g", playerLeft);
 
 	//DrawFormatString(0, 100, GetColor(255, 0, 255),
 	//	"BÀ•Wx:%g", boxRight);
-
-
 	if (shotLeft > boxRight)
 	{
-		//m_isExist = true;
 		return false;
 	}
 	if (shotRight < boxLeft)
 	{
-		//m_isExist = true;
 		return false;
 	}
 
 	return true;
+	
 }

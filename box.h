@@ -18,7 +18,7 @@ public:
 	virtual void setPos(Vec2 pos);
 	
 
-	void setDead(bool isDead) { m_isDead = true; }
+	void setDead(bool isDead) { m_isDead = isDead; }
 
 	// ƒf[ƒ^‚Ìæ“¾
 	Vec2 getPos() const { return m_pos; } 

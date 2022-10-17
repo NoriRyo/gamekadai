@@ -1,5 +1,7 @@
 #include "DxLib.h"
 #include "SceneMain.h"
+#include "game.h"
+
 
 /*
 bool isCol(Player& player, Box& box)
@@ -17,6 +19,7 @@ namespace
 	// ショットの発射間隔
 	constexpr int kShotInterval = 15;
 	int direction = 0;
+	int damage;
 }
 
 SceneMain::SceneMain()
@@ -50,7 +53,7 @@ void SceneMain::init()
 	// BOX
 	m_box1.setGraphic(m_hBoxGraphic);
 	m_box1.setSpeedRight(10.0f);
-	m_box1.setPos(-451.0f, 0.0f);
+	m_box1.setPos(-452.0f, 0.0f);
 	
 	//m_box1.setPos(50.0f, 0.0f);
 
@@ -85,10 +88,15 @@ void SceneMain::update()
 	m_box1.upda();
 	m_box2.upda();
 
+			
 
 	for (auto& shot : m_shot)
 	{
-		if (shot.isCol(m_box1) || shot.isCol(m_box2))
+		if (shot.isCol(m_box1))
+		{
+			shot.isExist();
+		}
+		if (shot.isCol(m_box2))
 		{
 			shot.isExist();
 		}
@@ -140,19 +148,27 @@ void SceneMain::update()
 	}
 	*/
 	
+	if (m_shot->isExist())
+	{
+		// 当たり判定
+		if (m_player.isCol(m_box1))
+		{
+			m_player.setDead(true);
+		}
+		if (m_player.isCol(m_box2))
+		{
+			m_player.setDead(true);
+		}
 
-	// 当たり判定
-	if (m_player.isCol(m_box1))
-	{
-		m_box1.setDead(true);
-		m_player.setDead(true);
+		if (m_shot->isCol(m_box1))
+		{
+			m_box1.setDead(true);
+		}
+		if (m_shot->isCol(m_box2))
+		{
+			m_box2.setDead(true);
+		}
 	}
-	if (m_player.isCol(m_box2))
-	{
-		m_player.setDead(true);
-		m_box2.setDead(true);
-	}
-	
 }
 
 // 毎フレームの描画
@@ -162,9 +178,16 @@ void SceneMain::draw()
 	
 	for (auto& shot : m_shot)
 	{
-		if (shot.isCol(m_box1) || shot.isCol(m_box2))
+		
+		if (shot.isCol(m_box1))
 		{
-			
+			DrawFormatString(100, 230, GetColor(255, 255, 255),
+				"ヒット！");
+		}
+		if (shot.isCol(m_box2))
+		{
+			DrawFormatString(100, 230, GetColor(255, 255, 255),
+				"ヒット！");
 		}
 		else
 		{
@@ -182,9 +205,12 @@ void SceneMain::draw()
 	{
 		if (shot.isExist()) shotNum++;
 	}
-  DrawFormatString(0, 30, GetColor(255, 255, 255), "弾の数：%d", shotNum);
+	SetFontSize(24);
+	DrawFormatString(0, 30, GetColor(255, 255, 255), "弾の数：%d", shotNum);
 	DrawFormatString(0, 0, GetColor(255, 255, 255), 
 		"1ボタン（発射）");
 	
 
+	DrawFormatString(0, 100, GetColor(255, 255, 255),
+		"ダメージ：%d", damage);
 }

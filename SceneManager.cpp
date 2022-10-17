@@ -19,6 +19,9 @@ void SceneManager::init(SceneKind kind)
 	case SceneManager::kSceneKindTitle:
 		m_title.init();
 		break;
+	case SceneManager::kSceneKindStart:
+		m_start.init();
+		break;
 	case SceneManager::kSceneKindMain:
 		m_main.init();
 		break;
@@ -51,12 +54,17 @@ void SceneManager::update()
 
 	Pad::update();
 
-	bool isEnd = false;
+	bool isEndT = false;
+	bool isEndS = false;
 	switch (m_kind)
 	{
 	case SceneManager::kSceneKindTitle:
 		m_title.update();
-		isEnd = m_title.isEnd();
+		isEndT = m_title.isEnd();
+		break;
+	case SceneManager::kSceneKindStart:
+		m_start.upda();
+		isEndS = m_start.isEnd();
 		break;
 	case SceneManager::kSceneKindMain:
 		m_main.update();
@@ -67,13 +75,17 @@ void SceneManager::update()
 		assert(false);
 		break;
 	}
-	if (isEnd)
+	if (isEndT|| isEndS)
 	{
 		switch (m_kind)
 		{
 		case SceneManager::kSceneKindTitle:
 			m_title.end();
 			m_main.init();
+			m_kind = kSceneKindStart;
+			break;
+		case SceneManager::kSceneKindStart:
+			m_start.init();
 			m_kind = kSceneKindMain;
 			break;
 		case SceneManager::kSceneKindMain:
@@ -95,6 +107,9 @@ void SceneManager::draw()
 	{
 	case SceneManager::kSceneKindTitle:
 		m_title.draw();
+		break;
+	case SceneManager::kSceneKindStart:
+		m_start.draw();
 		break;
 	case SceneManager::kSceneKindMain:
 		m_main.draw();
