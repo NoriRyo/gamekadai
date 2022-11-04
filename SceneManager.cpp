@@ -56,6 +56,7 @@ void SceneManager::update()
 
 	bool isEndT = false;
 	bool isEndS = false;
+	bool isEndM = false;
 	switch (m_kind)
 	{
 	case SceneManager::kSceneKindTitle:
@@ -68,14 +69,14 @@ void SceneManager::update()
 		break;
 	case SceneManager::kSceneKindMain:
 		m_main.update();
-		//isEnd = m_main.isEnd();
+		isEndM = m_main.isEnd();
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
 		assert(false);
 		break;
 	}
-	if (isEndT|| isEndS)
+	if (isEndT|| isEndS || isEndM)
 	{
 		switch (m_kind)
 		{

@@ -19,7 +19,7 @@ Player::Player()
 
 	m_direction = false;
 
-	m_isDead = false;
+	
 }
 
 Player::~Player()
@@ -35,6 +35,7 @@ void Player::setHandle(int handle)
 
 void Player::init()
 {
+	m_isDead = false;
 	m_pos.x = 280.0f;
 	m_pos.y = 320.0f;
 	m_vec.x = 0.0f;
@@ -82,14 +83,18 @@ void Player::update()
 
 void Player::draw()
 {
-	if (m_direction == true)
+	if (!m_isDead)
 	{
-		DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+		if (m_direction == true)
+		{
+			DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+		}
+		else
+		{
+			DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
+		}
 	}
-	else
-	{
-		DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
-	}
+	
 }
 
 bool Player::isCol(Box& box)

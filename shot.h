@@ -19,7 +19,7 @@ public:
 	// •\¦
 	void draw();
 
-	// Õ“Ë”»’è
+	// ’e‚Æ“G‚ÌÕ“Ë”»’è
 	bool isCol(Box& box);
 
 	// î•ñ‚Ìæ“¾

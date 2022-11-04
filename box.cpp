@@ -4,15 +4,15 @@
 namespace
 {
 	// 待ち時間
-	constexpr int kWaitFrameMin = 60;
-	constexpr int kWaitFrameMax = 60;
+	//constexpr int kWaitFrameMin = 60;
+	//constexpr int kWaitFrameMax = 60;
 	
 }
 
 Box::Box()
 {
 	m_handle = -1;
-	m_isDead = false;
+	
 	m_waitFrame = 0;
 }
 
@@ -20,6 +20,12 @@ Box::~Box()
 {
 
 }
+
+void Box::init()
+{
+	m_isDead = false;
+}
+
 void Box::setGraphic(int handle)
 {
 	m_handle = handle;
@@ -29,12 +35,12 @@ void Box::setGraphic(int handle)
 void Box::setSpeedLeft(float speedleft)
 {
 	m_SpeedLeft = speedleft;
-	m_vec.x = -m_SpeedLeft;
+	m_vec.x = -10.0f;
 }
 void Box::setSpeedRight(float speedright)
 {
 	m_SpeedRight = speedright;
-	m_vec.x = m_SpeedRight;
+	m_vec.x = 10.0f;
 }
 
 void Box::setPos(float x, float y)
@@ -45,7 +51,7 @@ void Box::setPos(float x, float y)
 
 
 	// 動き始めるまでの時間を設定　1秒から3秒待つ　60フレームから180フレーム
-	m_waitFrame = 180;//GetRand(kWaitFrameMax - kWaitFrameMin) + kWaitFrameMin;
+	m_waitFrame = 120;//GetRand(kWaitFrameMax - kWaitFrameMin) + kWaitFrameMin;
 
 }
 
@@ -70,7 +76,7 @@ void Box::upda()
 		//setPos(0.0f, 0.0f);
 	}
 
-	m_isDead = 0;
+	//m_isDead = 0;
 	
 }
 void Box::draw()

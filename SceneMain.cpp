@@ -20,6 +20,7 @@ namespace
 	constexpr int kShotInterval = 15;
 	int direction = 0;
 	int damage;
+	int BoxNum ;
 }
 
 SceneMain::SceneMain()
@@ -52,23 +53,28 @@ void SceneMain::init()
 
 	// BOX
 	m_box1.setGraphic(m_hBoxGraphic);
-	m_box1.setSpeedRight(10.0f);
+	m_box1.setSpeedRight(1.0f);
 	m_box1.setPos(-452.0f, 0.0f);
+	m_box1.init();
 	
-	//m_box1.setPos(50.0f, 0.0f);
+//	m_box1.setPos(-500.0f, 0.0f);
 
 
 	m_box2.setGraphic(m_hBoxGraphic);
-	m_box2.setSpeedLeft(10.0f);
-	m_box2.setPos(600.0f, 0.0f);
+	m_box2.setSpeedLeft(1.0f);
+	m_box2.setPos(1200.0f, 0.0f);
+	m_box2.init();
 	
-	//m_box2.setPos(550.0f, 0.0f);
+//	m_box2.setPos(550.0f, 0.0f);
 
 	for (auto& shot : m_shot)
 	{
 		shot.setHandle(m_hShotGraphic);
 	}
 	m_shotInterval = 0;
+
+
+	m_isEnd = false;
 }
 
 // 終了処理
@@ -128,7 +134,7 @@ void SceneMain::update()
 			
 			m_shotInterval = kShotInterval;
 
-			break;
+			//break;
 		}
 	}
 
@@ -147,19 +153,56 @@ void SceneMain::update()
 		}
 	}
 	*/
-	
-	if (m_shot->isExist())
+	for (auto& shot : m_shot)
+	{
+		if (shot.isExist())
+		{
+			if (shot.isCol(m_box1))
+			{
+				m_box1.setSpeedRight(0.0f);
+				m_box1.setDead(true);
+				DrawFormatString(100, 250, GetColor(255, 255, 255),
+					"ヒット1！");
+			}
+			if (shot.isCol(m_box2))
+			{
+				m_box2.setSpeedLeft(0.0f);
+				m_box2.setDead(true);
+				DrawFormatString(100, 230, GetColor(255, 255, 255),
+					"ヒット2！");
+
+				m_isEnd = true;
+
+				return;
+			}
+
+		}
+
+		shot.draw();
+
+	}
+	if (!m_shot->isExist())
 	{
 		// 当たり判定
 		if (m_player.isCol(m_box1))
 		{
+			DrawFormatString(50, 200, GetColor(255, 255, 255),
+				"死亡！");
 			m_player.setDead(true);
+			m_isEnd = true;
+
+			return;
 		}
 		if (m_player.isCol(m_box2))
 		{
+			DrawFormatString(50, 200, GetColor(255, 255, 255),
+				"死亡！");
 			m_player.setDead(true);
-		}
+			m_isEnd = true;
 
+			return;
+		}
+		/*
 		if (m_shot->isCol(m_box1))
 		{
 			m_box1.setDead(true);
@@ -168,6 +211,10 @@ void SceneMain::update()
 		{
 			m_box2.setDead(true);
 		}
+
+		*/
+		
+
 	}
 }
 
@@ -178,21 +225,31 @@ void SceneMain::draw()
 	
 	for (auto& shot : m_shot)
 	{
+		if (shot.isExist())
+		{
+			if (shot.isCol(m_box1))
+			{
+				m_box1.setSpeedRight(0.0f);
+				m_box1.setDead(true);
+				DrawFormatString(100, 250, GetColor(255, 255, 255),
+					"ヒット1！");
+			}
+			if (shot.isCol(m_box2))
+			{
+				m_box2.setSpeedLeft(0.0f);
+				m_box2.setDead(true);
+				DrawFormatString(100, 230, GetColor(255, 255, 255),
+					"ヒット2！");
+
+				m_isEnd = true;
+
+				return;
+			}
+			
+		}
 		
-		if (shot.isCol(m_box1))
-		{
-			DrawFormatString(100, 230, GetColor(255, 255, 255),
-				"ヒット！");
-		}
-		if (shot.isCol(m_box2))
-		{
-			DrawFormatString(100, 230, GetColor(255, 255, 255),
-				"ヒット！");
-		}
-		else
-		{
-			shot.draw();
-		}
+		shot.draw();
+		
 	}
 
 	m_box1.drawturn();
@@ -206,11 +263,11 @@ void SceneMain::draw()
 		if (shot.isExist()) shotNum++;
 	}
 	SetFontSize(24);
-	DrawFormatString(0, 30, GetColor(255, 255, 255), "弾の数：%d", shotNum);
+	//DrawFormatString(0, 30, GetColor(255, 255, 255), "弾の数：%d", shotNum);
 	DrawFormatString(0, 0, GetColor(255, 255, 255), 
 		"1ボタン（発射）");
 	
 
-	DrawFormatString(0, 100, GetColor(255, 255, 255),
-		"ダメージ：%d", damage);
+	//DrawFormatString(0, 100, GetColor(255, 255, 255),
+	//	"ダメージ：%d", damage);
 }

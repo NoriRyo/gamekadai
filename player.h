@@ -24,7 +24,7 @@ public:
 	// •`‰æ
 	void draw();
 
-	// Õ“Ë”»’è
+	// “G‚ÆƒvƒŒƒCƒ„[‚ÌÕ“Ë”»’è
 	bool isCol(Box& box);
 
 	// î•ñ‚Ìæ“¾

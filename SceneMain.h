@@ -20,6 +20,8 @@ public:
 	void update();
 	// 毎フレームの描画
 	void draw();
+
+	virtual bool isEnd() { return m_isEnd; }
 	
 private:
 	// ショットの最大数
@@ -48,4 +50,6 @@ private:
 	Vec2 m_pos;
 	// 移動
 	Vec2 m_vec;
+
+	bool m_isEnd;
 };

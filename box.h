@@ -7,6 +7,7 @@ public:
 	Box();
 	virtual ~Box();
 
+	void init();
 	// グラフィックデータ設定
 	void setGraphic(int handle);
 

@@ -8,7 +8,7 @@ namespace
 	constexpr float kSizeX = 50.0f;
 	constexpr float kSizeY = 54.0f;
 
-	constexpr float kShotSpeed = 8.0f;
+	constexpr float kShotSpeed = 4.0f;
 }
 
 
@@ -65,7 +65,8 @@ void Shot::update()
 	{
 		m_isExist = false;
 	}
-	else if (m_pos.x < -0)
+
+	else if (m_pos.x < 0)
 	{
 		m_isExist = false;
 	}
