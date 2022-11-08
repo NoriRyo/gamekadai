@@ -29,5 +29,5 @@ void SceneStart::draw()
 {
 	SetFontSize(64);
 	DrawFormatString(100, 100, GetColor(255, 255, 255),
-		"スタート");
+		"敵を倒せ！！");
 }

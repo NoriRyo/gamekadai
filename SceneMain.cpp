@@ -153,69 +153,10 @@ void SceneMain::update()
 		}
 	}
 	*/
-	for (auto& shot : m_shot)
-	{
-		if (shot.isExist())
-		{
-			if (shot.isCol(m_box1))
-			{
-				m_box1.setSpeedRight(0.0f);
-				m_box1.setDead(true);
-				DrawFormatString(100, 250, GetColor(255, 255, 255),
-					"ヒット1！");
-			}
-			if (shot.isCol(m_box2))
-			{
-				m_box2.setSpeedLeft(0.0f);
-				m_box2.setDead(true);
-				DrawFormatString(100, 230, GetColor(255, 255, 255),
-					"ヒット2！");
+	
 
-				m_isEnd = true;
-
-				return;
-			}
-
-		}
-
-		shot.draw();
-
-	}
-	if (!m_shot->isExist())
-	{
-		// 当たり判定
-		if (m_player.isCol(m_box1))
-		{
-			DrawFormatString(50, 200, GetColor(255, 255, 255),
-				"死亡！");
-			m_player.setDead(true);
-			m_isEnd = true;
-
-			return;
-		}
-		if (m_player.isCol(m_box2))
-		{
-			DrawFormatString(50, 200, GetColor(255, 255, 255),
-				"死亡！");
-			m_player.setDead(true);
-			m_isEnd = true;
-
-			return;
-		}
-		/*
-		if (m_shot->isCol(m_box1))
-		{
-			m_box1.setDead(true);
-		}
-		if (m_shot->isCol(m_box2))
-		{
-			m_box2.setDead(true);
-		}
-
-		*/
-		
-
-	}
+	
+	
 }
 
 // 毎フレームの描画
@@ -231,15 +172,18 @@ void SceneMain::draw()
 			{
 				m_box1.setSpeedRight(0.0f);
 				m_box1.setDead(true);
-				DrawFormatString(100, 250, GetColor(255, 255, 255),
-					"ヒット1！");
+				
+				
 			}
 			if (shot.isCol(m_box2))
 			{
 				m_box2.setSpeedLeft(0.0f);
 				m_box2.setDead(true);
-				DrawFormatString(100, 230, GetColor(255, 255, 255),
-					"ヒット2！");
+				SetFontSize(128);
+				DrawFormatString(100, 230, GetColor(0, 255, 255),
+					"クリア！");
+				WaitKey();
+				
 
 				m_isEnd = true;
 
@@ -254,6 +198,37 @@ void SceneMain::draw()
 
 	m_box1.drawturn();
 	m_box2.draw();
+
+
+	if (!m_shot->isExist())
+	{
+		// 当たり判定
+		if (m_player.isCol(m_box1))
+		{
+			m_player.setDead(true);
+			m_player.draw();
+			m_isEnd = true;
+			
+			WaitKey();
+			WaitTimer(1000);
+			return;
+		}
+		if (m_player.isCol(m_box2))
+		{
+			m_player.setDead(true);
+			m_player.draw();
+			m_isEnd = true;
+
+			WaitKey();
+			return;
+		}
+		
+		
+
+		
+
+
+	}
 
 
 	// 現在存在している玉の数を表示

@@ -83,7 +83,13 @@ void Player::update()
 
 void Player::draw()
 {
-	if (!m_isDead)
+	if (m_isDead)
+	{
+		SetFontSize(128);
+		DrawFormatString(50, 250, GetColor(255, 0, 0),
+			"Ž€–SI");
+	}
+	else
 	{
 		if (m_direction == true)
 		{
@@ -93,8 +99,8 @@ void Player::draw()
 		{
 			DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
 		}
+		
 	}
-	
 }
 
 bool Player::isCol(Box& box)
@@ -113,8 +119,14 @@ bool Player::isCol(Box& box)
 	//	"BÀ•Wx:%g", boxRight);
 	
 	
-	if (playerLeft > boxRight)	return false;
-	if (playerRight < boxLeft)	return false;
+	if (playerLeft > boxRight)
+	{
+		return false;
+	}
+	if (playerRight < boxLeft)
+	{
+		return false;
+	}
 	
 
 	return true;

@@ -5,6 +5,7 @@
 
 void SceneTitle::init()
 {
+	SetFontSize(32);
 	m_textPosY = 0;
 	m_textVecY = 4;
 
@@ -13,9 +14,9 @@ void SceneTitle::init()
 	m_menu.init();
 
 	m_menu.addItem("ゲームスタート");
-	m_menu.addItem("げーむすたーと");
-	m_menu.addItem("GAMESTART");
-	m_menu.addItem("gamestart");
+	//m_menu.addItem("げーむすたーと");
+	//m_menu.addItem("GAMESTART");
+	//m_menu.addItem("gamestart");
 	//m_menu.addItem("オプション");
 	//m_menu.addItem("ゲーム終了");
 	//m_menu.addItem("デバッグ");
