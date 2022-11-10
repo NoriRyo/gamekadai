@@ -60,14 +60,14 @@ void Player::update()
 	else if (padState & PAD_INPUT_LEFT)
 	{
 		m_direction = false;
-		m_vec.x -= kAcc;
-		if (m_vec.x < -kSpeedMax)	m_vec.x = -kSpeedMax;
+		//m_vec.x -= kAcc;
+		//if (m_vec.x < -kSpeedMax)	m_vec.x = -kSpeedMax;
 	}
 	else if (padState & PAD_INPUT_RIGHT)
 	{
 		m_direction = true;
-		m_vec.x += kAcc;
-		if (m_vec.x > kSpeedMax)	m_vec.x = kSpeedMax;
+		//m_vec.x += kAcc;
+		//if (m_vec.x > kSpeedMax)	m_vec.x = kSpeedMax;
 	}
 	
 	else
@@ -99,31 +99,22 @@ void Player::draw()
 		{
 			DrawTurnGraph(m_pos.x, m_pos.y, m_handle, true);
 		}
-		
 	}
 }
 
-bool Player::isCol(Box& box)
+bool Player::isCol(Enemry& enemry)
 {
 	float playerLeft = getPos().x;
 	float playerRight = getPos().x + kSizeX;
 	
-	float boxLeft = box.getPos().x + 70.0f;
-	float boxRight = box.getPos().x + box.getSize().x - 70.0f;
+	float EnemryLeft = enemry.getPos().x + 70.0f;
+	float EnemryRight = enemry.getPos().x + enemry.getSize().x - 70.0f;
 	
-
-	//DrawFormatString(0, 60, GetColor(255, 0, 255),
-	//	"PÀ•Wx:%g", playerLeft);
-	
-	//DrawFormatString(0, 100, GetColor(255, 0, 255),
-	//	"BÀ•Wx:%g", boxRight);
-	
-	
-	if (playerLeft > boxRight)
+	if (playerLeft > EnemryRight)
 	{
 		return false;
 	}
-	if (playerRight < boxLeft)
+	if (playerRight < EnemryLeft)
 	{
 		return false;
 	}

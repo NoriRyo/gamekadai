@@ -2,25 +2,10 @@
 #include "SceneMain.h"
 #include "game.h"
 
-
-/*
-bool isCol(Player& player, Box& box)
-{
-	if (player.getPos().x > box.getPos().x) return false;
-	if (player.getPos().x + 64.0f < box.getPos().x) return false;
-	if (player.getPos().y > box.getBottomRight().y) return false;
-	if (player.getPos().y + 80.0f < box.getPos().y) return false;
-	
-	return true;
-}
-*/
 namespace
 {
 	// ショットの発射間隔
 	constexpr int kShotInterval = 15;
-	int direction = 0;
-	int damage;
-	int BoxNum ;
 }
 
 SceneMain::SceneMain()
@@ -28,7 +13,7 @@ SceneMain::SceneMain()
 	m_hPlayerGraphic = -1;
 	m_hShotGraphic = -1;
 	m_hEnemyGraphic = -1;
-	m_hBoxGraphic = -1;
+	m_hEnemryGraphic = -1;
 
 	m_shotInterval = 0;
 }
@@ -44,28 +29,21 @@ void SceneMain::init()
 
 	m_hShotGraphic = LoadGraph("data/kidan1.png");
 
-	m_hBoxGraphic  = LoadGraph("data/enemy.png");
-
-	//m_hEnemyGraphic = LoadGraph("data/shot.bmp");
+	m_hEnemryGraphic  = LoadGraph("data/enemy.png");
 
 	m_player.setHandle(m_hPlayerGraphic);
 	m_player.init();
 
-	// BOX
-	m_box1.setGraphic(m_hBoxGraphic);
-	m_box1.setSpeedRight(1.0f);
-	m_box1.setPos(-452.0f, 0.0f);
-	m_box1.init();
-	
-//	m_box1.setPos(-500.0f, 0.0f);
+	// Enemry
+	m_Enemry1.setGraphic(m_hEnemryGraphic);
+	m_Enemry1.setSpeedRight(1.0f);
+	m_Enemry1.setPos(-452.0f, 0.0f);
+	m_Enemry1.init();
 
-
-	m_box2.setGraphic(m_hBoxGraphic);
-	m_box2.setSpeedLeft(1.0f);
-	m_box2.setPos(1200.0f, 0.0f);
-	m_box2.init();
-	
-//	m_box2.setPos(550.0f, 0.0f);
+	m_Enemry2.setGraphic(m_hEnemryGraphic);
+	m_Enemry2.setSpeedLeft(1.0f);
+	m_Enemry2.setPos(1200.0f, 0.0f);
+	m_Enemry2.init();
 
 	for (auto& shot : m_shot)
 	{
@@ -90,19 +68,17 @@ void SceneMain::update()
 {
 	m_player.update();
 
-	// BOX
-	m_box1.upda();
-	m_box2.upda();
-
-			
+	// Enemry
+	m_Enemry1.upda();
+	m_Enemry2.upda();
 
 	for (auto& shot : m_shot)
 	{
-		if (shot.isCol(m_box1))
+		if (shot.isCol(m_Enemry1))
 		{
 			shot.isExist();
 		}
-		if (shot.isCol(m_box2))
+		if (shot.isCol(m_Enemry2))
 		{
 			shot.isExist();
 		}
@@ -130,33 +106,9 @@ void SceneMain::update()
 			{
 				shot.startRight(m_player.getPos());
 			}
-			
-			
 			m_shotInterval = kShotInterval;
-
-			//break;
 		}
 	}
-
-	/*
-	if ((padState & PAD_INPUT_1) && (m_shotInterval <= 0))
-	{
-		for (auto& shot : m_shot)
-		{
-			if (shot.isExist()) continue;
-
-			shot.startRight(m_player.getPos());
-			m_shotInterval = kShotInterval;
-
-			direction = 0;
-			break;
-		}
-	}
-	*/
-	
-
-	
-	
 }
 
 // 毎フレームの描画
@@ -168,68 +120,51 @@ void SceneMain::draw()
 	{
 		if (shot.isExist())
 		{
-			if (shot.isCol(m_box1))
+			if (shot.isCol(m_Enemry1))
 			{
-				m_box1.setSpeedRight(0.0f);
-				m_box1.setDead(true);
-				
-				
+				m_Enemry1.setSpeedRight(0.0f);
+				m_Enemry1.setDead(true);
 			}
-			if (shot.isCol(m_box2))
+			if (shot.isCol(m_Enemry2))
 			{
-				m_box2.setSpeedLeft(0.0f);
-				m_box2.setDead(true);
+				m_Enemry2.setSpeedLeft(0.0f);
+				m_Enemry2.setDead(true);
 				SetFontSize(128);
 				DrawFormatString(100, 230, GetColor(0, 255, 255),
 					"クリア！");
-				WaitKey();
-				
-
+				ScreenFlip();
+				WaitTimer(1000);
 				m_isEnd = true;
 
 				return;
 			}
-			
 		}
-		
 		shot.draw();
-		
 	}
 
-	m_box1.drawturn();
-	m_box2.draw();
+	m_Enemry1.drawturn();
+	m_Enemry2.draw();
 
-
-	if (!m_shot->isExist())
+	// 当たり判定
+	if (m_player.isCol(m_Enemry1))
 	{
-		// 当たり判定
-		if (m_player.isCol(m_box1))
-		{
-			m_player.setDead(true);
-			m_player.draw();
-			m_isEnd = true;
-			
-			WaitKey();
-			WaitTimer(1000);
-			return;
-		}
-		if (m_player.isCol(m_box2))
-		{
-			m_player.setDead(true);
-			m_player.draw();
-			m_isEnd = true;
-
-			WaitKey();
-			return;
-		}
-		
-		
-
-		
-
-
+		m_player.setDead(true);
+		m_player.draw();
+		m_isEnd = true;
+		ScreenFlip();
+		WaitTimer(1000);
+		return;
 	}
 
+	if (m_player.isCol(m_Enemry2))
+	{
+		m_player.setDead(true);
+		m_player.draw();
+		m_isEnd = true;
+		ScreenFlip();
+		WaitTimer(1000);
+		return;
+	}
 
 	// 現在存在している玉の数を表示
 	int shotNum = 0;
@@ -241,8 +176,4 @@ void SceneMain::draw()
 	//DrawFormatString(0, 30, GetColor(255, 255, 255), "弾の数：%d", shotNum);
 	DrawFormatString(0, 0, GetColor(255, 255, 255), 
 		"1ボタン（発射）");
-	
-
-	//DrawFormatString(0, 100, GetColor(255, 255, 255),
-	//	"ダメージ：%d", damage);
 }

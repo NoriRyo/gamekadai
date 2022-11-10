@@ -1,7 +1,7 @@
 #pragma once
 #include "shot.h"
 #include "Vec2.h"
-#include "box.h"
+#include "enemy.h"
 
 class Player
 {
@@ -25,7 +25,7 @@ public:
 	void draw();
 
 	// “G‚ÆƒvƒŒƒCƒ„[‚ÌÕ“Ë”»’è
-	bool isCol(Box& box);
+	bool isCol(Enemry& Enemry);
 
 	// î•ñ‚Ìæ“¾
 	Vec2 getPos() const { return m_pos; }

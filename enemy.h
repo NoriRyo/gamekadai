@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Vec2.h"
-class Box
+class Enemry
 {
 public:
-	Box();
-	virtual ~Box();
+	Enemry();
+	virtual ~Enemry();
 
 	void init();
 	// グラフィックデータ設定

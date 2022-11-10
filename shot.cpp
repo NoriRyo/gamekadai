@@ -78,24 +78,19 @@ void Shot::draw()
 	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
 }
 
-bool Shot::isCol(Box& box)
+bool Shot::isCol(Enemry& enemry)
 {
 	float shotLeft = getPos().x;
 	float shotRight = getPos().x + kSizeX;
 
-	float boxLeft = box.getPos().x + 70.0f;
-	float boxRight = box.getPos().x + box.getSize().x - 70.0f;
+	float EnemryLeft = enemry.getPos().x + 70.0f;
+	float EnemryRight = enemry.getPos().x + enemry.getSize().x - 70.0f;
 
-	//DrawFormatString(0, 60, GetColor(255, 0, 255),
-	//	"PÀ•Wx:%g", playerLeft);
-
-	//DrawFormatString(0, 100, GetColor(255, 0, 255),
-	//	"BÀ•Wx:%g", boxRight);
-	if (shotLeft > boxRight)
+	if (shotLeft > EnemryRight)
 	{
 		return false;
 	}
-	if (shotRight < boxLeft)
+	if (shotRight < EnemryLeft)
 	{
 		return false;
 	}

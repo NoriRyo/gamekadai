@@ -3,7 +3,7 @@
 #include "player.h"
 #include "shot.h"
 #include "Vec2.h"
-#include "box.h"
+#include "enemy.h"
 
 class SceneMain
 {
@@ -33,13 +33,13 @@ private:
 	int m_hPlayerGraphic;
 	int m_hShotGraphic;
 	int m_hEnemyGraphic;
-	int m_hBoxGraphic;
+	int m_hEnemryGraphic;
 	// プレイヤー
 	Player m_player;
-	Box m_box1;
-	Box m_box2;
+	Enemry m_Enemry1;
+	Enemry m_Enemry2;
 	// ボックス
-	//Box m_box;
+	//Enemry m_Enemry;
 	
 	// ショット
 	Shot m_shot[kShotMax];
